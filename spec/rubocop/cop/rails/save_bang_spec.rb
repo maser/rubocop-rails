@@ -541,12 +541,16 @@ RSpec.describe RuboCop::Cop::Rails::SaveBang, :config do
       if allow_implicit_return
         expect_no_offenses(<<~RUBY)
           def foo
+            bar
+
             object.#{method}
           end
         RUBY
       else
         expect_offense(<<~RUBY, method: method)
           def foo
+            bar
+
             object.#{method}
                    ^{method} Use `#{method}!` instead of `#{method}` if the return value is not checked.
           end
@@ -558,12 +562,16 @@ RSpec.describe RuboCop::Cop::Rails::SaveBang, :config do
       if allow_implicit_return
         expect_no_offenses(<<~RUBY)
           objects.each do |object|
+            foo
+
             object.#{method}
           end
         RUBY
       else
         expect_offense(<<~RUBY, method: method)
           objects.each do |object|
+            foo
+
             object.#{method}
                    ^{method} Use `#{method}!` instead of `#{method}` if the return value is not checked.
           end
@@ -575,12 +583,16 @@ RSpec.describe RuboCop::Cop::Rails::SaveBang, :config do
       if allow_implicit_return
         expect_no_offenses(<<~RUBY)
           def whatever
+            foo
+
             [{ success: object.#{method} }, true]
           end
         RUBY
       else
         expect_offense(<<~RUBY, method: method)
           def whatever
+            foo
+
             [{ success: object.#{method} }, true]
                                ^{method} Use `#{method}!` instead of `#{method}` if the return value is not checked.
           end
